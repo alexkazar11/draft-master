@@ -5,7 +5,7 @@ const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 const REQUEST_DELAY_MS = 500;
 
 function cacheKey(setCode) {
-  return `mtg_cards_${setCode.toLowerCase()}`;
+  return `mtg_cards_${setCode}`;
 }
 
 function delay(ms) {
@@ -74,9 +74,7 @@ export async function fetchSet(setCode) {
 
   if (cachedCards) return cachedCards;
 
-  let url = `${SCRYFALL_API}/cards/search?order=set&q=e%3A${encodeURIComponent(
-    normalizedSetCode,
-  )}&unique=cards`;
+  let url = `${SCRYFALL_API}/cards/search?order=set&q=e%3A${normalizedSetCode}&unique=cards`;
 
   const cards = [];
 
