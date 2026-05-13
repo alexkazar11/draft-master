@@ -2,26 +2,45 @@
 
 const SCRYFALL_API = "https://api.scryfall.com";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const REQUEST_DELAY_MS = 500;
+
+function cacheKey(setCode) {
+  return `mtg_cards_${setCode.toLowerCase()}`;
+}
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function getCachedCards(setCode) {
-  const cached = localStorage.getItem(`mtg_cards_${setCode}`);
+  try {
+    const cached = localStorage.getItem(cacheKey(setCode));
+    if (!cached) return null;
 
-  if (cached) {
     const { timestamp, cards } = JSON.parse(cached);
-    if (Date.now() - timestamp < CACHE_TTL_MS) {
-      return cards;
-    }
+
+    if (!timestamp || !Array.isArray(cards)) return null;
+
+    return Date.now() - timestamp < CACHE_TTL_MS ? cards : null;
+  } catch {
+    return null;
   }
 }
 
-function setCache(setCode, data) {
-  localStorage.setItem(
-    `mtg_cards_${setCode}`,
-    JSON.stringify({ timestamp: Date.now(), cards: data }),
+function setCache(setCode, cards) {
+  try {
+    localStorage.setItem(
+      cacheKey(setCode),
+      JSON.stringify({ timestamp: Date.now(), cards }),
+    );
+  } catch {
+    // Ignore cache failures.
+  }
+}
+
+function getCardImage(card) {
+  return (
+    card.image_uris?.normal ?? card.card_faces?.[0]?.image_uris?.normal ?? null
   );
 }
 
@@ -30,48 +49,52 @@ function normalizeCard(card) {
     id: card.id,
     name: card.name,
     rarity: card.rarity,
-    image: card.image_uris?.normal,
+    image: getCardImage(card),
     type_line: card.type_line,
     mana_cost: card.mana_cost,
-    colors: card.colors,
+    colors: card.colors ?? [],
   };
 }
 
 async function fetchPage(url) {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-    return response.json();
-  } catch (error) {
-    console.error(`fetchPage failed for ${url}:`, error);
-    throw error;
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Scryfall request failed: ${response.status}`);
   }
+
+  return response.json();
 }
 
 export async function fetchSet(setCode) {
-  const cards = getCachedCards(setCode);
-  if (cards) return cards;
+  const normalizedSetCode = setCode.toLowerCase();
+  const cachedCards = getCachedCards(normalizedSetCode);
 
-  let response = await fetchPage(
-    `${SCRYFALL_API}/cards/search?order=set&q=e%3A${setCode}&unique=cards`,
-  );
+  if (cachedCards) return cachedCards;
 
-  let fullData = [];
-  fullData.push(...response.data.map(normalizeCard));
+  let url = `${SCRYFALL_API}/cards/search?order=set&q=e%3A${encodeURIComponent(
+    normalizedSetCode,
+  )}&unique=cards`;
 
-  while (response.has_more) {
-    await delay(500);
-    response = await fetchPage(response.next_page);
-    fullData.push(...response.data.map(normalizeCard));
+  const cards = [];
+
+  while (url) {
+    const response = await fetchPage(url);
+
+    cards.push(...response.data.map(normalizeCard));
+
+    url = response.has_more ? response.next_page : null;
+
+    if (url) {
+      await delay(REQUEST_DELAY_MS);
+    }
   }
 
-  setCache(setCode, fullData);
+  setCache(normalizedSetCode, cards);
 
-  return fullData;
+  return cards;
 }
 
 export default fetchSet;
