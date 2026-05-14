@@ -7,7 +7,7 @@ function useDraft() {
 
   useEffect(() => {
     fetchSet("sos").then((d) => {
-      setPacks(generatePacks(d));
+      setPacks(generatePacks(d, 3));
     });
   }, []);
 

@@ -1,3 +1,4 @@
+// Hard-coded now, but needs to be extracted into JSON file & imported
 const PACK_CONFIG = {
   rare: { count: 1, odds: { mythic: 0.15, rare: 0.85 } },
   wildcard: {
@@ -91,14 +92,16 @@ function generatePack(cardPool, config) {
   return pack;
 }
 
-function generatePacks(cards) {
+function generatePacks(cards, count = 1) {
   const pool = buildCardPools(cards);
 
-  const pack1 = generatePack(pool, PROCESSED_CONFIG);
-  const pack2 = generatePack(pool, PROCESSED_CONFIG);
-  const pack3 = generatePack(pool, PROCESSED_CONFIG);
+  let packs = [];
 
-  return [pack1, pack2, pack3];
+  for (let i = 0; i < count; i++) {
+    packs.push(generatePack(pool, PROCESSED_CONFIG));
+  }
+
+  return packs;
 }
 
 export default generatePacks;

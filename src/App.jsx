@@ -10,7 +10,10 @@ function App() {
         <h2>Pack: {i + 1}</h2>
         <ul>
           {pack.map((card, j) => (
-            <li key={j}> {JSON.stringify(card.rarity)} </li>
+            <li key={j}>
+              {" "}
+              {`Rarity: ${JSON.stringify(card.rarity)} // Name: ${JSON.stringify(card.name)}`}{" "}
+            </li>
           ))}
         </ul>
       </li>
