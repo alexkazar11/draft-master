@@ -1,12 +1,14 @@
 import { useReducer, useEffect } from "react";
 import fetchSet from "../api/scryfall.js";
 import generatePacks from "../utils/packGeneration.js";
-import createInitialState from "../utils/draftLogic.js";
+import { createInitialState, confirmPick } from "../utils/draftLogic.js";
 
 function draftReducer(state, action) {
   switch (action.type) {
     case "INIT":
       return action.payload;
+    case "PICK_CARD":
+      return confirmPick(state, action.cardId);
     default:
       return state;
   }
@@ -23,7 +25,7 @@ function useDraft() {
     });
   }, []);
 
-  return { gameState };
+  return { gameState, dispatch };
 }
 
 export default useDraft;
