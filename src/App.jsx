@@ -1,12 +1,26 @@
-import { useState, useEffect } from "react";
-import fetchSet from "./api/scryfall.js";
+import useDraft from "./hooks/useDraft.js";
 
-export default function App() {
-  const [data, setData] = useState(null);
+function App() {
+  const { packs } = useDraft();
 
-  useEffect(() => {
-    fetchSet("sos").then((d) => setData(d));
-  }, []);
+  const listPacks =
+    packs &&
+    packs.map((pack, i) => (
+      <li key={i}>
+        <h2>Pack: {i + 1}</h2>
+        <ul>
+          {pack.map((card, j) => (
+            <li key={j}> {JSON.stringify(card.rarity)} </li>
+          ))}
+        </ul>
+      </li>
+    ));
 
-  return <p>{JSON.stringify(data)}</p>;
+  return (
+    <>
+      <ul>{listPacks || "loading"}</ul>
+    </>
+  );
 }
+
+export default App;
