@@ -1,19 +1,4 @@
-// Hard-coded now, but needs to be extracted into JSON file & imported
-const PACK_CONFIG = {
-  rare: { count: 1, odds: { mythic: 0.15, rare: 0.85 } },
-  wildcard: {
-    count: 1,
-    odds: {
-      mythic: 0.02,
-      rare: 0.2,
-      uncommon: 0.39,
-      common: 0.39,
-    },
-  },
-  uncommon: { count: 3, odds: { uncommon: 1 } },
-  common: { count: 6, odds: { common: 1 } },
-  land: { count: 1, odds: { land: 1 } },
-};
+import { NUM_PLAYERS, NUM_PACKS, PACK_CONFIG } from "../config/draftConfig.js";
 
 const PROCESSED_CONFIG = Object.values(PACK_CONFIG).map((details) => ({
   count: details.count,
@@ -92,16 +77,14 @@ function generatePack(cardPool, config) {
   return pack;
 }
 
-function generatePacks(cards, count = 1) {
+function generatePacks(cards) {
   const pool = buildCardPools(cards);
 
-  let packs = [];
-
-  for (let i = 0; i < count; i++) {
-    packs.push(generatePack(pool, PROCESSED_CONFIG));
-  }
-
-  return packs;
+  return Array.from({ length: NUM_PACKS }, () =>
+    Array.from({ length: NUM_PLAYERS }, () =>
+      generatePack(pool, PROCESSED_CONFIG),
+    ),
+  );
 }
 
 export default generatePacks;

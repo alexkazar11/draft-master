@@ -1,29 +1,11 @@
 import useDraft from "./hooks/useDraft.js";
 
 function App() {
-  const { packs } = useDraft();
+  const { gameState } = useDraft();
 
-  const listPacks =
-    packs &&
-    packs.map((pack, i) => (
-      <li key={i}>
-        <h2>Pack: {i + 1}</h2>
-        <ul>
-          {pack.map((card, j) => (
-            <li key={j}>
-              {" "}
-              {`Rarity: ${JSON.stringify(card.rarity)} // Name: ${JSON.stringify(card.name)}`}{" "}
-            </li>
-          ))}
-        </ul>
-      </li>
-    ));
+  if (!gameState) return <p>Loading...</p>;
 
-  return (
-    <>
-      <ul>{listPacks || "loading"}</ul>
-    </>
-  );
+  return <pre>{JSON.stringify(gameState, null, 2)}</pre>;
 }
 
 export default App;
