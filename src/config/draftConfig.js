@@ -21,3 +21,11 @@ export const PACK_SIZE = Object.values(PACK_CONFIG).reduce(
   (sum, slot) => sum + slot.count,
   0,
 );
+
+export const RARITY_ORDER = {
+  mythic: 0,
+  rare: 1,
+  uncommon: 2,
+  common: 3,
+  land: 4,
+};

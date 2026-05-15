@@ -1,6 +1,7 @@
 import { useDraftContext } from "../../context/DraftProvider.jsx";
-import CardItem from "./CardItem.jsx";
 import { getPackIndex } from "../../utils/draftLogic.js";
+import { RARITY_ORDER } from "../../config/draftConfig.js";
+import CardItem from "./CardItem.jsx";
 
 function PackDisplay() {
   const { state, dispatch } = useDraftContext();
@@ -8,9 +9,11 @@ function PackDisplay() {
   if (!state) return <p>Loading...</p>;
 
   const packIndex = getPackIndex(0, state.currentPick, state.currentRound);
-  const cardList = state.packs[state.currentRound][packIndex].map((c, i) => (
-    <CardItem key={`${c.id}-${i}`} card={c} onPick={handlePick} />
-  ));
+  const cardList = [...state.packs[state.currentRound][packIndex]]
+    .sort((a, b) => RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity])
+    .map((c, i) => (
+      <CardItem key={`${c.id}-${i}`} card={c} onPick={handlePick} />
+    ));
 
   function handlePick(cardId) {
     dispatch({ type: "PICK_CARD", cardId });
