@@ -1,4 +1,5 @@
 import { NUM_PLAYERS } from "../config/draftConfig.js";
+import { pickBotCards } from "./botLogic.js";
 
 export function createInitialState(packs) {
   let gameState = {
@@ -9,6 +10,12 @@ export function createInitialState(packs) {
   };
 
   return gameState;
+}
+
+export function confirmPick(state, cardId) {
+  const stateAfterHuman = pickCard(state, 0, cardId);
+  const stateAfterBots = pickBotCards(stateAfterHuman);
+  return stateAfterBots;
 }
 
 export function pickCard(state, playerIndex, cardId) {
