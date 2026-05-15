@@ -9,19 +9,25 @@ function DraftBoard() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: "4rem",
-          fontSize: "2rem",
-        }}
-      >
-        <p>{`Pack: ${state.currentRound + 1} `} </p>{" "}
-        <p>{`Pick: ${state.currentPick + 1}`}</p>
-      </div>
-      <PackDisplay />
+      {state.draftComplete ? (
+        <p>Draft Finished! </p>
+      ) : (
+        <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: "4rem",
+              fontSize: "2rem",
+            }}
+          >
+            <p>{`Pack: ${state.currentRound + 1} `} </p>{" "}
+            <p>{`Pick: ${state.currentPick + 1}`}</p>
+          </div>
+          <PackDisplay />
+        </>
+      )}
       <DraftedCards />
     </>
   );
