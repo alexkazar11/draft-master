@@ -70,8 +70,15 @@ function generatePack(cardPool, config) {
   let pack = [];
 
   for (const { count, thresholds } of config) {
-    let type = pickOddsType(thresholds);
-    pack.push(...pickRandomCards(type, cardPool, count));
+    if (thresholds.length > 1) {
+      for (let i = 0; i < count; i++) {
+        const type = pickOddsType(thresholds);
+        pack.push(...pickRandomCards(type, cardPool, 1));
+      }
+    } else {
+      const type = pickOddsType(thresholds);
+      pack.push(...pickRandomCards(type, cardPool, count));
+    }
   }
 
   return pack;
