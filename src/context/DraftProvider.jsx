@@ -6,10 +6,10 @@ import useDraft from "../hooks/useDraft.js";
 export const DraftContext = createContext(null);
 
 export function DraftProvider({ children }) {
-  const { gameState, dispatch } = useDraft();
+  const { state, dispatch } = useDraft();
 
   return (
-    <DraftContext.Provider value={{ gameState, dispatch }}>
+    <DraftContext.Provider value={{ state, dispatch }}>
       {children}
     </DraftContext.Provider>
   );

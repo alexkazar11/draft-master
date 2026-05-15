@@ -2,7 +2,7 @@ import { NUM_PLAYERS, PACK_SIZE, NUM_PACKS } from "../config/draftConfig.js";
 import { pickBotCards } from "./botLogic.js";
 
 export function createInitialState(packs) {
-  let gameState = {
+  let state = {
     currentRound: 0,
     currentPick: 0,
     players: Array.from({ length: NUM_PLAYERS }, () => ({ draftedCards: [] })),
@@ -10,7 +10,7 @@ export function createInitialState(packs) {
     draftComplete: false,
   };
 
-  return gameState;
+  return state;
 }
 
 function advancePick(state) {
@@ -29,10 +29,11 @@ function advancePick(state) {
   return { ...state, draftComplete: true };
 }
 
-function getPackIndex(playerIndex, currentPick, currentRound) {
+export function getPackIndex(playerIndex, currentPick, currentRound) {
+  const normalizedPick = currentPick % NUM_PLAYERS;
   return currentRound % 2 === 0
-    ? (playerIndex + currentPick) % NUM_PLAYERS
-    : (playerIndex - currentPick + NUM_PLAYERS) % NUM_PLAYERS;
+    ? (playerIndex + normalizedPick) % NUM_PLAYERS
+    : (playerIndex - normalizedPick + NUM_PLAYERS) % NUM_PLAYERS;
 }
 
 export function confirmPick(state, cardId) {

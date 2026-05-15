@@ -15,7 +15,7 @@ function draftReducer(state, action) {
 }
 
 function useDraft() {
-  const [gameState, dispatch] = useReducer(draftReducer, null);
+  const [state, dispatch] = useReducer(draftReducer, null);
 
   useEffect(() => {
     fetchSet("sos").then((d) => {
@@ -25,7 +25,7 @@ function useDraft() {
     });
   }, []);
 
-  return { gameState, dispatch };
+  return { state, dispatch };
 }
 
 export default useDraft;
