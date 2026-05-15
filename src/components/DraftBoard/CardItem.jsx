@@ -1,10 +1,8 @@
 function CardItem({ card, onPick }) {
   return (
-    <img
-      src={card.image}
-      style={{ height: "250px", width: "auto", cursor: "pointer" }}
-      onClick={() => onPick?.(card.id)}
-    ></img>
+    <div className="card-item">
+      <img src={card.image} alt={card.name} onClick={() => onPick?.(card.id)} />
+    </div>
   );
 }
 

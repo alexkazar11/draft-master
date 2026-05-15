@@ -5,8 +5,8 @@ import useDraft from "../hooks/useDraft.js";
 
 export const DraftContext = createContext(null);
 
-export function DraftProvider({ children }) {
-  const { state, dispatch } = useDraft();
+export function DraftProvider({ children, setCode }) {
+  const { state, dispatch } = useDraft(setCode);
 
   return (
     <DraftContext.Provider value={{ state, dispatch }}>

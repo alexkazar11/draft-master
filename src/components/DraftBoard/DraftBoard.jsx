@@ -5,31 +5,26 @@ import PackDisplay from "./PackDisplay.jsx";
 function DraftBoard() {
   const { state } = useDraftContext();
 
-  if (!state) return <p>Loading...</p>;
+  if (!state) return <p className="draft-complete">Loading...</p>;
+
+  if (state.draftComplete) {
+    return (
+      <div className="draft-board">
+        <p className="draft-complete">Draft Complete</p>
+        <DraftedCards />
+      </div>
+    );
+  }
 
   return (
-    <>
-      {state.draftComplete ? (
-        <p>Draft Finished! </p>
-      ) : (
-        <>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: "4rem",
-              fontSize: "2rem",
-            }}
-          >
-            <p>{`Pack: ${state.currentRound + 1} `} </p>{" "}
-            <p>{`Pick: ${state.currentPick + 1}`}</p>
-          </div>
-          <PackDisplay />
-        </>
-      )}
+    <div className="draft-board">
+      <div className="draft-stats">
+        <span>Pack {state.currentRound + 1}</span>
+        <span>Pick {state.currentPick + 1}</span>
+      </div>
+      <PackDisplay />
       <DraftedCards />
-    </>
+    </div>
   );
 }
 

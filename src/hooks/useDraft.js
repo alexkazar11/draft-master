@@ -14,16 +14,16 @@ function draftReducer(state, action) {
   }
 }
 
-function useDraft() {
+function useDraft(setCode) {
   const [state, dispatch] = useReducer(draftReducer, null);
 
   useEffect(() => {
-    fetchSet("sos").then((d) => {
+    fetchSet(setCode).then((d) => {
       const packs = generatePacks(d);
       const initialState = createInitialState(packs);
       dispatch({ type: "INIT", payload: initialState });
     });
-  }, []);
+  }, [setCode]);
 
   return { state, dispatch };
 }

@@ -1,0 +1,128 @@
+/* ── Tokens ── */
+:root {
+  --bg-base: #0e0e12;
+  --bg-surface: #1a1a24;
+  --bg-card: #22222f;
+  --border: #2e2e40;
+  --accent: #c9a84c;
+  --accent-dim: #7a6230;
+  --text-primary: #e8e4d9;
+  --text-muted: #7a7890;
+  --rarity-mythic: #e8a030;
+  --rarity-rare: #c9a84c;
+  --rarity-uncommon: #9ab0c4;
+  --rarity-common: #ccc;
+  --radius: 6px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: "Palatino Linotype", Palatino, Georgia, serif;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Layout ── */
+.draft-board {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Stats Bar ── */
+.draft-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── Pack Grid ── */
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 18vw), 1fr));
+  gap: 0.75rem;
+  flex: 1;
+  align-content: center;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+/* ── Card ── */
+.card-item img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.card-item img:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.8),
+    0 0 0 1px var(--accent);
+}
+
+/* ── Drafted Cards ── */
+.drafted-section {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.drafted-section h2 {
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.drafted-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.drafted-grid .card-item img {
+  height: 11vh;
+  cursor: default;
+}
+
+/* ── Draft Complete ── */
+.draft-complete {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.5rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
