@@ -1,4 +1,4 @@
-import { NUM_PLAYERS } from "../config/draftConfig.js";
+import { NUM_PLAYERS, PACK_SIZE, NUM_PACKS } from "../config/draftConfig.js";
 import { pickBotCards } from "./botLogic.js";
 
 export function createInitialState(packs) {
@@ -7,15 +7,34 @@ export function createInitialState(packs) {
     currentPick: 0,
     players: Array.from({ length: NUM_PLAYERS }, () => ({ draftedCards: [] })),
     packs: packs,
+    draftComplete: false,
   };
 
   return gameState;
 }
 
+function advancePick(state) {
+  const { currentRound, currentPick } = state;
+  const isLastPick = currentPick >= PACK_SIZE - 1;
+  const isLastRound = currentRound >= NUM_PACKS - 1;
+
+  if (!isLastPick) {
+    return { ...state, currentPick: currentPick + 1 };
+  }
+
+  if (!isLastRound) {
+    return { ...state, currentPick: 0, currentRound: currentRound + 1 };
+  }
+
+  return { ...state, draftComplete: true };
+}
+
 export function confirmPick(state, cardId) {
+  if (state.draftComplete) return state;
   const stateAfterHuman = pickCard(state, 0, cardId);
   const stateAfterBots = pickBotCards(stateAfterHuman);
-  return stateAfterBots;
+  const stateAfterAdvance = advancePick(stateAfterBots);
+  return stateAfterAdvance;
 }
 
 export function pickCard(state, playerIndex, cardId) {
@@ -37,7 +56,8 @@ export function pickCard(state, playerIndex, cardId) {
       if (i !== currentRound) return round;
       return round.map((pack, j) => {
         if (j !== packIndex) return pack;
-        return pack.filter((c) => c.id !== cardId);
+        const index = pack.findIndex((c) => c.id === cardId);
+        return [...pack.slice(0, index), ...pack.slice(index + 1)];
       });
     }),
   };

@@ -16,3 +16,8 @@ export const PACK_CONFIG = {
   common: { count: 6, odds: { common: 1 } },
   land: { count: 1, odds: { land: 1 } },
 };
+
+export const PACK_SIZE = Object.values(PACK_CONFIG).reduce(
+  (sum, slot) => sum + slot.count,
+  0,
+);

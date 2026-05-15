@@ -6,8 +6,12 @@ function App() {
   if (!gameState) return <p>Loading...</p>;
 
   function handleTestPick() {
-    const { currentRound, currentPick } = gameState;
-    const currentPack = gameState.packs[currentRound][currentPick];
+    const { currentRound, currentPick, draftComplete } = gameState;
+    if (draftComplete) {
+      alert("draft over");
+      return;
+    }
+    const currentPack = gameState.packs[currentRound][(0 + currentPick) % 8];
     const firstCard = currentPack[0];
     dispatch({ type: "PICK_CARD", cardId: firstCard.id });
   }

@@ -7,8 +7,8 @@ export function pickBotCards(state) {
   for (let i = 1; i < NUM_PLAYERS; i++) {
     const packIndex = (i + newState.currentPick) % NUM_PLAYERS;
     const pack = newState.packs[newState.currentRound][packIndex];
-    const randomCard = pack[Math.floor(Math.random() * pack.length)].id;
-    newState = pickCard(newState, i, randomCard);
+    const randomCardId = pack[Math.floor(Math.random() * pack.length)].id;
+    newState = pickCard(newState, i, randomCardId);
   }
 
   return newState;
