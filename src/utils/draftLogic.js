@@ -29,6 +29,12 @@ function advancePick(state) {
   return { ...state, draftComplete: true };
 }
 
+function getPackIndex(playerIndex, currentPick, currentRound) {
+  return currentRound % 2 === 0
+    ? (playerIndex + currentPick) % NUM_PLAYERS
+    : (playerIndex - currentPick + NUM_PLAYERS) % NUM_PLAYERS;
+}
+
 export function confirmPick(state, cardId) {
   if (state.draftComplete) return state;
   const stateAfterHuman = pickCard(state, 0, cardId);
@@ -39,7 +45,7 @@ export function confirmPick(state, cardId) {
 
 export function pickCard(state, playerIndex, cardId) {
   const { currentRound, currentPick } = state;
-  const packIndex = (playerIndex + currentPick) % NUM_PLAYERS;
+  const packIndex = getPackIndex(playerIndex, currentPick, currentRound);
   const currentPack = state.packs[currentRound][packIndex];
   const card = currentPack.find((c) => c.id === cardId);
 
