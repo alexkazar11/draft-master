@@ -11,16 +11,16 @@ export function createInitialState(packs) {
   return gameState;
 }
 
-export function confirmPick(state, cardId) {
+export function pickCard(state, playerIndex, cardId) {
   const { currentRound, currentPick } = state;
-  const currentPack = state.packs[currentRound][currentPick];
+  const packIndex = (playerIndex + currentPick) % NUM_PLAYERS;
+  const currentPack = state.packs[currentRound][packIndex];
   const card = currentPack.find((c) => c.id === cardId);
 
   return {
     ...state,
-    currentPick: state.currentPick + 1,
     players: state.players.map((player, i) => {
-      if (i !== 0) return player;
+      if (i !== playerIndex) return player;
       return {
         ...player,
         draftedCards: [...player.draftedCards, card],
@@ -29,7 +29,7 @@ export function confirmPick(state, cardId) {
     packs: state.packs.map((round, i) => {
       if (i !== currentRound) return round;
       return round.map((pack, j) => {
-        if (j !== currentPick) return pack;
+        if (j !== packIndex) return pack;
         return pack.filter((c) => c.id !== cardId);
       });
     }),
