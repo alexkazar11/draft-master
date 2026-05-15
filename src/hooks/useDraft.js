@@ -18,6 +18,7 @@ function useDraft(setCode) {
   const [state, dispatch] = useReducer(draftReducer, null);
 
   useEffect(() => {
+    if (!setCode) return;
     fetchSet(setCode).then((d) => {
       const packs = generatePacks(d);
       const initialState = createInitialState(packs);

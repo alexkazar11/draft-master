@@ -114,6 +114,9 @@ body {
 
 .drafted-grid .card-item img {
   height: 11vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
   cursor: default;
 }
 
