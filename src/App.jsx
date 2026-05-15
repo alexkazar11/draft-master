@@ -1,7 +1,7 @@
-import useDraft from "./hooks/useDraft.js";
+import { useDraftContext } from "./context/DraftProvider.jsx";
 
 function App() {
-  const { gameState, dispatch } = useDraft();
+  const { gameState, dispatch } = useDraftContext();
 
   if (!gameState) return <p>Loading...</p>;
 
