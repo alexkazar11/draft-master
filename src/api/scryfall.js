@@ -68,6 +68,41 @@ async function fetchPage(url) {
   return response.json();
 }
 
+function normalizeSet(set) {
+  return {
+    id: set.id,
+    name: set.name,
+    code: set.code,
+    released: set.released_at,
+    cardCount: set.card_count,
+    icon: set.icon_svg_uri,
+  };
+}
+
+function isExpansionSet(set) {
+  return set.set_type === "expansion";
+}
+
+export async function fetchAllSets() {
+  let url = `${SCRYFALL_API}/sets`;
+
+  const sets = [];
+
+  while (url) {
+    const response = await fetchPage(url);
+
+    sets.push(...response.data.filter(isExpansionSet).map(normalizeSet));
+
+    url = response.has_more ? response.next_page : null;
+
+    if (url) {
+      await delay(REQUEST_DELAY_MS);
+    }
+  }
+
+  return sets;
+}
+
 export async function fetchSet(setCode) {
   const normalizedSetCode = setCode.toLowerCase();
   const cachedCards = getCachedCards(normalizedSetCode);
