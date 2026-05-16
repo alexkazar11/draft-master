@@ -4,35 +4,28 @@ const SCRYFALL_API = "https://api.scryfall.com";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 const REQUEST_DELAY_MS = 500;
 
-function cacheKey(setCode) {
-  return `mtg_cards_${setCode}`;
-}
-
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function getCachedCards(setCode) {
+function getCache(key) {
   try {
-    const cached = localStorage.getItem(cacheKey(setCode));
+    const cached = localStorage.getItem(key);
     if (!cached) return null;
 
-    const { timestamp, cards } = JSON.parse(cached);
+    const { timestamp, data } = JSON.parse(cached);
 
-    if (!timestamp || !Array.isArray(cards)) return null;
+    if (!timestamp || !Array.isArray(data)) return null;
 
-    return Date.now() - timestamp < CACHE_TTL_MS ? cards : null;
+    return Date.now() - timestamp < CACHE_TTL_MS ? data : null;
   } catch {
     return null;
   }
 }
 
-function setCache(setCode, cards) {
+function setCache(key, data) {
   try {
-    localStorage.setItem(
-      cacheKey(setCode),
-      JSON.stringify({ timestamp: Date.now(), cards }),
-    );
+    localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data }));
   } catch {
     // Ignore cache failures.
   }
@@ -89,6 +82,11 @@ function isDraftable(set) {
 }
 
 export async function fetchAllSets() {
+  const cacheKey = `mtg_sets`;
+  const cachedSets = getCache(cacheKey);
+
+  if (cachedSets) return cachedSets;
+
   let url = `${SCRYFALL_API}/sets`;
 
   const sets = [];
@@ -105,12 +103,15 @@ export async function fetchAllSets() {
     }
   }
 
+  setCache(cacheKey, sets);
+
   return sets;
 }
 
 export async function fetchSet(setCode) {
   const normalizedSetCode = setCode.toLowerCase();
-  const cachedCards = getCachedCards(normalizedSetCode);
+  const cacheKey = `mtg_cards_${normalizedSetCode}`;
+  const cachedCards = getCache(cacheKey);
 
   if (cachedCards) return cachedCards;
 
@@ -130,7 +131,7 @@ export async function fetchSet(setCode) {
     }
   }
 
-  setCache(normalizedSetCode, cards);
+  setCache(cacheKey, cards);
 
   return cards;
 }
