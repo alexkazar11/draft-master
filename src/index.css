@@ -129,3 +129,45 @@ body {
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
+
+/* ── Draft Setup ── */
+.setup-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.setup-page select {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  width: 320px;
+  outline: none;
+  cursor: pointer;
+}
+
+.setup-page button {
+  background: none;
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.75rem 2.5rem;
+  cursor: pointer;
+}
+
+.setup-page button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg-base);
+}

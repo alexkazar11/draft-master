@@ -21,7 +21,7 @@ function DraftSetup({ onStart }) {
   }
 
   return (
-    <>
+    <div className="setup-page">
       {allSets && (
         <>
           <select value={selectedSet} onChange={handleSelectChange}>
@@ -34,7 +34,7 @@ function DraftSetup({ onStart }) {
           <button onClick={handleSubmit}>Start Draft</button>
         </>
       )}
-    </>
+    </div>
   );
 }
 
