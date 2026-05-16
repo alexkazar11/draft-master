@@ -79,8 +79,13 @@ function normalizeSet(set) {
   };
 }
 
-function isExpansionSet(set) {
-  return set.set_type === "expansion";
+function isReleased(dateStr) {
+  const today = new Date().toISOString().slice(0, 10);
+  return dateStr < today;
+}
+
+function isDraftable(set) {
+  return set.set_type === "expansion" && isReleased(set.released_at);
 }
 
 export async function fetchAllSets() {
@@ -91,7 +96,7 @@ export async function fetchAllSets() {
   while (url) {
     const response = await fetchPage(url);
 
-    sets.push(...response.data.filter(isExpansionSet).map(normalizeSet));
+    sets.push(...response.data.filter(isDraftable).map(normalizeSet));
 
     url = response.has_more ? response.next_page : null;
 
