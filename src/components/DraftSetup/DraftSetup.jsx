@@ -25,10 +25,11 @@ function DraftSetup({ onStart }) {
     <div className="setup-page">
       {allSets && (
         <>
+          <h1>MTG Draft Simulator</h1>
           <select value={selectedSet.code} onChange={handleSelectChange}>
             {allSets.map((set) => (
               <option key={set.id} value={set.code}>
-                {set.name}
+                {`${set.name} (${set.code.toUpperCase()})`}
               </option>
             ))}
           </select>
