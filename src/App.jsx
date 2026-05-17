@@ -12,7 +12,10 @@ function App() {
 
   return (
     <DraftProvider setCode={selectedSet.code}>
-      <DraftBoard selectedSet={selectedSet} />
+      <DraftBoard
+        selectedSet={selectedSet}
+        onReset={() => setSelectedSet(null)}
+      />
     </DraftProvider>
   );
 }
