@@ -4,15 +4,15 @@ import DraftBoard from "./components/DraftBoard/DraftBoard.jsx";
 import DraftSetup from "./components/DraftSetup/DraftSetup.jsx";
 
 function App() {
-  const [setCode, setSetCode] = useState(null);
+  const [selectedSet, setSelectedSet] = useState(null);
 
-  if (!setCode) {
-    return <DraftSetup onStart={setSetCode} />;
+  if (!selectedSet) {
+    return <DraftSetup onStart={setSelectedSet} />;
   }
 
   return (
-    <DraftProvider setCode={setCode}>
-      <DraftBoard />
+    <DraftProvider setCode={selectedSet.code}>
+      <DraftBoard selectedSet={selectedSet} />
     </DraftProvider>
   );
 }

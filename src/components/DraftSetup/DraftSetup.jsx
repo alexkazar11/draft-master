@@ -8,12 +8,13 @@ function DraftSetup({ onStart }) {
   useEffect(() => {
     fetchAllSets().then((sets) => {
       setAllSets(sets);
-      setSelectedSet(sets[0].code);
+      setSelectedSet(sets[0]);
     });
   }, []);
 
   function handleSelectChange(event) {
-    setSelectedSet(event.target.value);
+    const set = allSets.find((s) => s.code === event.target.value);
+    setSelectedSet(set);
   }
 
   function handleSubmit() {
@@ -24,7 +25,7 @@ function DraftSetup({ onStart }) {
     <div className="setup-page">
       {allSets && (
         <>
-          <select value={selectedSet} onChange={handleSelectChange}>
+          <select value={selectedSet.code} onChange={handleSelectChange}>
             {allSets.map((set) => (
               <option key={set.id} value={set.code}>
                 {set.name}
