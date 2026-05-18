@@ -95,7 +95,7 @@ body {
 /* ── Pack Grid ── */
 .pack-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(160px, 18vw), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 13vw), 1fr));
   gap: 0.75rem;
   flex: 1;
   align-content: center;
@@ -155,11 +155,16 @@ body {
 
 /* ── Drafted Cards ── */
 .drafted-section {
-  flex: 1;
+  flex-shrink: 0;
   overflow: hidden;
   flex-shrink: 0;
   border-top: 1px solid var(--border);
   padding-top: 0.75rem;
+}
+
+.drafted-section--full {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .drafted-section h2 {
@@ -176,6 +181,10 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.35rem;
+}
+
+.drafted-grid--full .card-item img {
+  height: 18vh;
 }
 
 .drafted-grid .card-item img {

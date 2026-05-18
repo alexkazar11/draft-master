@@ -37,7 +37,7 @@ function DraftResults() {
 
   return (
     <div className="results-layout">
-      <DraftedCards />
+      <DraftedCards variant="full" />
       <ul className="card-stats">
         {coreTypes
           .filter((type) => cardStats[type])

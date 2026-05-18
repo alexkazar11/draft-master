@@ -1,7 +1,7 @@
 import { useDraftContext } from "../../context/DraftProvider.jsx";
 import CardItem from "./CardItem.jsx";
 
-function DraftedCards() {
+function DraftedCards({ variant = "strip" }) {
   const { state } = useDraftContext();
 
   if (!state) return null;
@@ -13,9 +13,15 @@ function DraftedCards() {
   ));
 
   return (
-    <div className="drafted-section">
+    <div
+      className={`drafted-section ${variant === "full" ? "drafted-section--full" : ""}`}
+    >
       <h2>Drafted Cards</h2>
-      <div className="drafted-grid">{cardList}</div>
+      <div
+        className={`drafted-grid ${variant === "full" ? "drafted-grid--full" : ""}`}
+      >
+        {cardList}
+      </div>
     </div>
   );
 }
