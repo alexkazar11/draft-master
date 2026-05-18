@@ -3,8 +3,17 @@ import DraftedCards from "./DraftedCards.jsx";
 import PackDisplay from "./PackDisplay.jsx";
 
 function DraftBoard({ selectedSet, onReset }) {
-  const { state } = useDraftContext();
+  const { state, error } = useDraftContext();
 
+  if (error)
+    return (
+      <div className="draft-error-wrapper">
+        <p className="draft-error">Failed to load set. Please try again.</p>
+        <button className="btn" onClick={onReset}>
+          New Draft
+        </button>
+      </div>
+    );
   if (!state) return <p className="draft-complete">Loading...</p>;
 
   if (state.draftComplete) {
