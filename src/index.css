@@ -60,10 +60,18 @@ body {
   flex-shrink: 0;
 }
 
+.helper-text {
+  position: absolute;
+  left: 0rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-dim);
+}
+
 .draft-stats button {
   background: none;
   position: absolute;
-  right: 2rem;
+  right: 0rem;
   border: 1px solid var(--accent-dim);
   border-radius: var(--radius);
   background-color: var(--accent);

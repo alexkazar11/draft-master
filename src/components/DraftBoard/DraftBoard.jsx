@@ -28,6 +28,7 @@ function DraftBoard({ selectedSet, onReset }) {
   return (
     <div className="draft-board">
       <div className="draft-stats">
+        <span className="helper-text"> (Shift+Click to zoom) </span>
         <span> {`${selectedSet.name} (${selectedSet.code})`}</span>
         <span>Pack {state.currentRound + 1}</span>
         <span>Pick {state.currentPick + 1}</span>
