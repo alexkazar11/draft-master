@@ -46,9 +46,8 @@ body {
 /* ── Stats Bar ── */
 .draft-stats {
   display: flex;
-  position: relative;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 3rem;
   padding: 0.75rem 0;
   font-size: 1rem;
@@ -60,9 +59,12 @@ body {
   flex-shrink: 0;
 }
 
+.draft-stats__centre {
+  display: flex;
+  gap: 3rem;
+}
+
 .helper-text {
-  position: absolute;
-  left: 0rem;
   font-size: 0.875rem;
   letter-spacing: 0.1em;
   color: var(--accent-dim);
@@ -70,8 +72,6 @@ body {
 
 .draft-stats button {
   background: none;
-  position: absolute;
-  right: 0rem;
   border: 1px solid var(--accent-dim);
   border-radius: var(--radius);
   background-color: var(--accent);
