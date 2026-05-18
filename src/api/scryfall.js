@@ -2,7 +2,8 @@
 
 const SCRYFALL_API = "https://api.scryfall.com";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
-const REQUEST_DELAY_MS = 500;
+const CARD_SEARCH_DELAY_MS = 500;
+const SETS_REQUEST_DELAY_MS = 100;
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -99,7 +100,7 @@ export async function fetchAllSets() {
     url = response.has_more ? response.next_page : null;
 
     if (url) {
-      await delay(REQUEST_DELAY_MS);
+      await delay(SETS_REQUEST_DELAY_MS);
     }
   }
 
@@ -127,7 +128,7 @@ export async function fetchSet(setCode) {
     url = response.has_more ? response.next_page : null;
 
     if (url) {
-      await delay(REQUEST_DELAY_MS);
+      await delay(CARD_SEARCH_DELAY_MS);
     }
   }
 
