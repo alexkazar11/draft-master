@@ -1,6 +1,7 @@
 import { useDraftContext } from "../../context/DraftProvider.jsx";
 import DraftedCards from "./DraftedCards.jsx";
 import PackDisplay from "./PackDisplay.jsx";
+import DraftResults from "../DraftResults/DraftResults.jsx";
 
 function DraftBoard({ selectedSet, onReset }) {
   const { state, error } = useDraftContext();
@@ -20,7 +21,7 @@ function DraftBoard({ selectedSet, onReset }) {
     return (
       <div className="draft-board">
         <p className="draft-complete">Draft Complete</p>
-        <DraftedCards />
+        <DraftResults />
       </div>
     );
   }

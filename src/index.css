@@ -155,6 +155,8 @@ body {
 
 /* ── Drafted Cards ── */
 .drafted-section {
+  flex: 1;
+  overflow: hidden;
   flex-shrink: 0;
   border-top: 1px solid var(--border);
   padding-top: 0.75rem;
@@ -275,4 +277,34 @@ body {
   background: var(--bg-base);
   border-color: var(--accent);
   color: var(--accent);
+}
+
+/* ── Drafted Cards Stats ── */
+ul {
+  padding-left: 1.5rem;
+  list-style-type: "— ";
+}
+
+.results-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.card-stats {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  list-style: none;
+  min-width: 200px;
+}
+
+.card-stats > li {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.card-stats ul {
+  padding-left: 1.5rem;
+  list-style-type: "— ";
+  color: var(--text-muted);
 }
