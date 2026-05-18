@@ -12,6 +12,14 @@ function DraftSetup({ onStart }) {
     });
   }, []);
 
+  if (!allSets)
+    return (
+      <div className="draft-loading">
+        <div className="spinner" />
+        <p>Loading...</p>
+      </div>
+    );
+
   function handleSelectChange(event) {
     const set = allSets.find((s) => s.code === event.target.value);
     setSelectedSet(set);

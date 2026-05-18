@@ -6,6 +6,14 @@ import DraftResults from "../DraftResults/DraftResults.jsx";
 function DraftBoard({ selectedSet, onReset }) {
   const { state, error } = useDraftContext();
 
+  if (!state)
+    return (
+      <div className="draft-loading">
+        <div className="spinner" />
+        <p>Loading...</p>
+      </div>
+    );
+
   if (error)
     return (
       <div className="draft-error-wrapper">
@@ -13,14 +21,6 @@ function DraftBoard({ selectedSet, onReset }) {
         <button className="btn" onClick={onReset}>
           New Draft
         </button>
-      </div>
-    );
-
-  if (!state)
-    return (
-      <div className="draft-loading">
-        <div className="spinner" />
-        <p>Loading...</p>
       </div>
     );
 
