@@ -15,7 +15,14 @@ function DraftBoard({ selectedSet, onReset }) {
         </button>
       </div>
     );
-  if (!state) return <p className="draft-complete">Loading...</p>;
+
+  if (!state)
+    return (
+      <div className="draft-loading">
+        <div className="spinner" />
+        <p>Loading...</p>
+      </div>
+    );
 
   if (state.draftComplete) {
     return (
