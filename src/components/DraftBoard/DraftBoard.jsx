@@ -20,7 +20,13 @@ function DraftBoard({ selectedSet, onReset }) {
   if (state.draftComplete) {
     return (
       <div className="draft-board">
-        <p className="draft-complete">Draft Complete</p>
+        <div className="draft-complete-header">
+          <p className="draft-complete">Draft Complete</p>
+          <button className="btn" onClick={onReset}>
+            New Draft
+          </button>
+        </div>
+
         <DraftResults />
       </div>
     );

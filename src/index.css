@@ -198,11 +198,20 @@ body {
 /* ── Draft Complete ── */
 .draft-complete {
   text-align: center;
-  padding: 4rem;
+  padding: 2rem;
   font-size: 1.5rem;
   color: var(--accent);
   letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+.draft-complete-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
 }
 
 /* ── Draft Setup ── */
@@ -297,6 +306,7 @@ ul {
 .results-layout {
   display: flex;
   flex-direction: row;
+  padding: 2rem;
   gap: 2rem;
 }
 
