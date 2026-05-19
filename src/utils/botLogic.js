@@ -12,6 +12,7 @@ export function pickBotCards(state) {
       newState.currentRound,
     );
     const pack = newState.packs[newState.currentRound][packIndex];
+    if (!pack || pack.length === 0) return newState;
     const randomCardId = pack[Math.floor(Math.random() * pack.length)].id;
     newState = pickCard(newState, i, randomCardId);
   }

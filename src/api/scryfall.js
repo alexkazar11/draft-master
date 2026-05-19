@@ -79,7 +79,11 @@ function isReleased(dateStr) {
 }
 
 function isDraftable(set) {
-  return set.set_type === "expansion" && isReleased(set.released_at);
+  return (
+    set.set_type === "expansion" &&
+    isReleased(set.released_at) &&
+    set.card_count > 300
+  );
 }
 
 export async function fetchAllSets() {
