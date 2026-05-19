@@ -12,7 +12,8 @@
   --rarity-rare: #c9a84c;
   --rarity-uncommon: #9ab0c4;
   --rarity-common: #ccc;
-  --radius: 6px;
+  --radius: 8px;
+  --radius-large: 24px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
 }
 
@@ -147,7 +148,7 @@ body {
 .card-modal img {
   width: 500px;
   height: auto;
-  border-radius: var(--radius);
+  border-radius: var(--radius-large);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   cursor: auto;
